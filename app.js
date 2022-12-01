@@ -2,12 +2,12 @@ const express = require("express");
 const request = require("request");
 const bodyParser = require("body-parser");
 const mailchimp = require("@mailchimp/mailchimp_marketing");
-
+require("dotenv").config()
 const app = express();
 
 mailchimp.setConfig({
-  apiKey: "86bfae3d68faf60b592516b26d382be1-us9",
-  server: "us9"
+  apiKey: process.env.API_KEY,
+  server: process.env.SERVER_KEY
 });
 
 app.use(express.static("public"));
@@ -32,7 +32,7 @@ app.post("/", function(req, res) {
     email: email
   };
 
-  var listId = "3269537f77";
+  var listId = process.env.LIST_ID;
 
   async function run() {
     const response = await mailchimp.lists.addListMember(listId, {
